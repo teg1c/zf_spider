@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/App" isTestSource="false" packagePrefix="App\" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dragonmantank/cron-expression" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/component" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/curl" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/easyswoole" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/http" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/spl" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/trigger" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/utility" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/easyswoole/validate" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jeremeamia/superclosure" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/fast-route" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php56" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-util" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
