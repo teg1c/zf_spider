@@ -8,8 +8,13 @@ use EasySwoole\HttpClient\HttpClient;
 
 class Index extends Base
 {
-	protected $url = "http://218.61.108.169";
+	protected $url = "http://jwgl6.ujn.edu.cn";//正方教务系统url
 	
+	/**
+	 * HttpClient 调用
+	 * @return bool|void
+	 * @throws \Exception
+	 */
 	function index()
 	{
 		$request  = $this->request();
@@ -24,8 +29,8 @@ class Index extends Base
 		$cookies  = $header->cookies;
 		
 		
-		$response = $this->curl('GET', $this->url . "/jwglxt/xtgl/login_getPublicKey.html?time=" . time() . "&_=" . time(), [], $cookies);
-		$key      = json_decode($response->getBody(), true);
+		$response   = $this->curl('GET', $this->url . "/jwglxt/xtgl/login_getPublicKey.html?time=" . time() . "&_=" . time(), [], $cookies);
+		$key        = json_decode($response->getBody(), true);
 		$exponent   = $key['exponent'];
 		$modulus    = $key['modulus'];
 		$rsa        = new \Crypt_RSA();
@@ -49,6 +54,60 @@ class Index extends Base
 			return $this->writeJson(Status::CODE_BAD_REQUEST, null, '密码错误');
 		}
 		
+		return $this->writeJson(Status::CODE_OK, null, 'success');
+	}
+	
+	/**
+	 * 协程方式调用
+	 * @return bool
+	 */
+	function coroutine()
+	{
+		$request  = $this->request();
+		$username = $request->getRequestParam('username');
+		$password = $request->getRequestParam('password');
+		if (!$username || !$password) {
+			return $this->writeJson(Status::CODE_BAD_REQUEST, null, '信息填写完整');
+		}
+		include_once EASYSWOOLE_ROOT . '/Extend/rsa/Crypt/RSA.php';
+		
+		\EasySwoole\EasySwoole\Core::getInstance()->initialize();
+		
+		go(function () use ($username, $password) {
+			$response = $this->curl('GET', $this->url . "/jwglxt/xtgl/login_slogin.html?language=zh_CN&_t=" . time());//执行请求
+			$header   = $response->getClient();
+			$cookies  = $header->cookies;
+			
+			
+			$response   = $this->curl('GET', $this->url . "/jwglxt/xtgl/login_getPublicKey.html?time=" . time() . "&_=" . time(), [], $cookies);
+			$key        = json_decode($response->getBody(), true);
+			$exponent   = $key['exponent'];
+			$modulus    = $key['modulus'];
+			$rsa        = new \Crypt_RSA();
+			$mykey['n'] = new \Math_BigInteger(bin2hex(base64_decode($modulus)), 16);
+			$mykey['e'] = new \Math_BigInteger(bin2hex(base64_decode($exponent)), 16);
+			$rsa->loadKey($mykey, CRYPT_RSA_PUBLIC_FORMAT_RAW);
+			$rsa->getPublicKey(CRYPT_RSA_ENCRYPTION_PKCS1);
+			
+			$rsa->setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);
+			$res      = $rsa->encrypt($password);
+			$password = base64_encode($res);
+			
+			$response = $this->curl('POST', $this->url . "/jwglxt/xtgl/login_slogin.html", [
+				'form_params' => [
+					'yhm' => $username,
+					'mm'  => $password,
+				]
+			], $cookies);
+			
+			if (strpos($response->getBody(), '用户名或密码不正确') !== false) {
+				//密码错误
+				//todo...
+			}
+			
+			//密码成功
+			//todo...
+		});
 		return $this->writeJson(Status::CODE_OK, null, 'success');
 	}
 	
