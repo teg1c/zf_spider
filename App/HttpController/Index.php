@@ -5,6 +5,7 @@ namespace App\HttpController;
 
 use EasySwoole\Http\Message\Status;
 use EasySwoole\HttpClient\HttpClient;
+use EasySwoole\EasySwoole\Core;
 
 class Index extends Base
 {
@@ -71,13 +72,12 @@ class Index extends Base
 		}
 		include_once EASYSWOOLE_ROOT . '/Extend/rsa/Crypt/RSA.php';
 		
-		\EasySwoole\EasySwoole\Core::getInstance()->initialize();
+		Core::getInstance()->initialize();
 		
 		go(function () use ($username, $password) {
 			$response = $this->curl('GET', $this->url . "/jwglxt/xtgl/login_slogin.html?language=zh_CN&_t=" . time());//执行请求
 			$header   = $response->getClient();
 			$cookies  = $header->cookies;
-			
 			
 			$response   = $this->curl('GET', $this->url . "/jwglxt/xtgl/login_getPublicKey.html?time=" . time() . "&_=" . time(), [], $cookies);
 			$key        = json_decode($response->getBody(), true);
@@ -104,7 +104,7 @@ class Index extends Base
 				//密码错误
 				//todo...
 			}
-			
+			echo 'Success' . PHP_EOL;
 			//密码成功
 			//todo...
 		});
@@ -120,11 +120,6 @@ class Index extends Base
 		];
 		switch ($method) {
 			case 'GET' :
-				if ($params && isset($params['query'])) {
-					foreach ($params['query'] as $key => $value) {
-					
-					}
-				}
 				break;
 			case 'POST' :
 				if ($params && isset($params['form_params'])) {
@@ -140,7 +135,6 @@ class Index extends Base
 		}
 		if (isset($params['header']) && !empty($params['header']) && is_array($params['header'])) {
 			$request->setHeaders(array_merge($params['header'], $defaultHeader));
-			
 		}
 		
 		return $request->exec();
