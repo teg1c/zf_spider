@@ -16,7 +16,7 @@ class Router extends AbstractRouter
 			return false;//结束此次响应
 		});
 		$this->setRouterNotFoundCallBack(function (Request $request,Response $response){
-			$response->write('未找到路由匹配');
+			$response->write('404 Not Found');
 			return false;
 		});
 		// TODO: Implement initialize() method.
