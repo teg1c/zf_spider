@@ -21,7 +21,7 @@ class Router extends AbstractRouter
 		});
 		// TODO: Implement initialize() method.
 		$routeCollector->get('/','/Index/index');
-		$routeCollector->get('coroutine','/Index/coroutine');
+		$routeCollector->get('/coroutine','/Index/coroutine');
 		
 	}
 }
