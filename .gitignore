@@ -6,7 +6,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/.idea
+.idea
 composer.lock
 _ide_helper.php
 .idea/workspace.xml
