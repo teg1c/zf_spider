@@ -9,7 +9,7 @@ use EasySwoole\EasySwoole\Core;
 
 class Index extends Base
 {
-	protected $url = "http://jwgl6.ujn.edu.cn";//正方教务系统url
+	protected $url = "http://218.61.108.169";//正方教务系统url
 	
 	/**
 	 * HttpClient 调用
@@ -131,7 +131,8 @@ class Index extends Base
 				break;
 		}
 		if ($cookie) {
-			$request->addCookie('JSESSIONID', $cookie['JSESSIONID']);
+			list($name, $val) = $cookie;
+			$request->addCookie($name, $val);
 		}
 		if (isset($params['header']) && !empty($params['header']) && is_array($params['header'])) {
 			$request->setHeaders(array_merge($params['header'], $defaultHeader));
