@@ -4,7 +4,7 @@
 
 ## Requirement
 
-- [PHP 7 +](http://php.net/manual/zh/migration71.new-features.php)
+- [PHP 7.1 +](http://php.net/manual/zh/migration71.new-features.php)
 - [Swoole](https://www.swoole.com)
 - [easySwoole 3.x](http://easyswoole.com/)
 - [Composer 1.0](http://pkg.phpcomposer.com/)
