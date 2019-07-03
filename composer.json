@@ -6,7 +6,7 @@
     },
     "require": {
         "easyswoole/easyswoole": "3.x",
-        "easyswoole/http-client": "^1.2",
+        "easyswoole/http-client": "1.2.4",
         "easyswoole/curl": "^1.0"
     }
 }
